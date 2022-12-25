@@ -9,7 +9,7 @@ import App from "./components/App";
 import store from "./app/store";
 import "./index.css";
 
-import ToggelColorModeProvider from "./utils/ToggelColorMode";
+import ToggelColorModeProvider from "./utils/ToggleColorMode";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = createTheme({});

@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     marginLeft: '240px',
     [theme.breakpoints.down('sm')]: {
-      marginLeft: 0,
+      marginLeft: '0',
       flexWrap: 'wrap',
     },
   },
@@ -25,9 +25,11 @@ export default makeStyles((theme) => ({
       flexShrink: 0,
     },
   },
-  drawerPaper: { width: drawerWidth },
+  drawerPaper: {
+    width: drawerWidth,
+  },
   linkButton: {
-    '&;hover': {
+    '&:hover': {
       color: 'white !important',
       textDecoration: 'none',
     },

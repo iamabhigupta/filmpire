@@ -5,7 +5,6 @@ import {
   Toolbar,
   Drawer,
   Button,
-  useTheme,
   Avatar,
   useMediaQuery,
 } from "@mui/material";
@@ -16,21 +15,21 @@ import {
   Brightness7,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ColorModeContext } from "../../utils/ToggelColorMode";
+import { ColorModeContext } from "../../utils/ToggleColorMode";
 import { setUser, userSelector } from "../../features/auth";
-import useStyles from "./styles";
-import { fetchToken, createSessionId, moviesApi } from "../../utils";
 import { Sidebar, Search } from "..";
+import { fetchToken, createSessionId, moviesApi } from "../../utils";
+import useStyles from "./styles";
 
-function Navbar() {
+const NavBar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const classes = useStyles();
-  const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:600px)");
+  const theme = useTheme();
   const dispatch = useDispatch();
 
   const colorMode = useContext(ColorModeContext);
@@ -45,6 +44,8 @@ function Navbar() {
           const { data: userData } = await moviesApi.get(
             `/account?session_id=${sessionIdFromLocalStorage}`
           );
+
+          dispatch(setUser(userData));
         } else {
           const sessionId = await createSessionId();
 
@@ -56,6 +57,7 @@ function Navbar() {
         }
       }
     };
+
     logInUser();
   }, [token]);
 
@@ -77,7 +79,7 @@ function Navbar() {
           <IconButton
             color="inherit"
             sx={{ ml: 1 }}
-            onClick={colorMode.toggelColorMode}
+            onClick={colorMode.toggleColorMode}
           >
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
@@ -99,7 +101,7 @@ function Navbar() {
                 <Avatar
                   style={{ width: 30, height: 30 }}
                   alt="Profile"
-                  src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+                  src={`https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg`}
                 />
               </Button>
             )}
@@ -114,7 +116,6 @@ function Navbar() {
               variant="temporary"
               anchor="right"
               open={mobileOpen}
-              // className={classes.drawerBackground}
               onClose={() => setMobileOpen((prevMobileOpen) => !prevMobileOpen)}
               classes={{ paper: classes.drawerPaper }}
               ModalProps={{ keepMounted: true }}
@@ -125,6 +126,7 @@ function Navbar() {
             <Drawer
               classes={{ paper: classes.drawerPaper }}
               variant="permanent"
+              open
             >
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
@@ -133,6 +135,6 @@ function Navbar() {
       </div>
     </>
   );
-}
+};
 
-export default Navbar;
+export default NavBar;
