@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
-import { Typography, Button, Box } from "@mui/material";
-import { ExitToApp } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { Typography, Button, Box } from '@mui/material';
+import { ExitToApp } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 
-import { userSelector } from "../../features/auth";
-import { useGetListQuery } from "../../services/TMDB";
-import { RatedCards } from "..";
+import { userSelector } from '../../features/auth';
+import { useGetListQuery } from '../../services/TMDB';
+import { RatedCards } from '..';
 
 function Profile() {
   const { user } = useSelector(userSelector);
   const { data: favoriteMovies, refetch: refetchFavorites } = useGetListQuery({
-    listName: "favorite/movies",
+    listName: 'favorite/movies',
     accountId: user.id,
-    sessionId: localStorage.getItem("session_id"),
+    sessionId: localStorage.getItem('session_id'),
     page: 1,
   });
   const { data: watchlistMovies, refetch: refetchWatchlisted } =
     useGetListQuery({
-      listName: "watchlist/movies",
+      listName: 'watchlist/movies',
       accountId: user.id,
-      sessionId: localStorage.getItem("session_id"),
+      sessionId: localStorage.getItem('session_id'),
       page: 1,
     });
 
@@ -31,7 +31,7 @@ function Profile() {
   const logout = () => {
     localStorage.clear();
 
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   return (
@@ -45,8 +45,8 @@ function Profile() {
         </Button>
       </Box>
       {!favoriteMovies?.results?.length && !watchlistMovies?.results?.length ? (
-        <Typography>
-          Add favourite or watchlist some movies to see them here!{" "}
+        <Typography variant="h5">
+          Add favourite or watchlist some movies to see them here!{' '}
         </Typography>
       ) : (
         <Box>

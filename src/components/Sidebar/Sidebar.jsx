@@ -38,22 +38,24 @@ function Sidebar({ setMobileOpen }) {
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
 
-  console.log(genreIdOrCategoryName);
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   return (
     <>
-      <Link to="/" className={classes.imageLink}>
+      <Link to='/' className={classes.imageLink}>
         <img
           className={classes.image}
           src={theme.palette.mode === "light" ? redLogo : blueLogo}
-          alt=""
+          alt=''
         />
       </Link>
       <Divider />
       <List>
         <ListSubheader>Categories</ListSubheader>
         {categories.map(({ lable, value }) => (
-          <Link key={value} className={classes.links} to="/">
+          <Link key={value} className={classes.links} to='/'>
             <ListItem
               onClick={() => dispatch(selectGenreOrCategory(value))}
               button
@@ -74,12 +76,12 @@ function Sidebar({ setMobileOpen }) {
       <List>
         <ListSubheader>Genres</ListSubheader>
         {isFetching ? (
-          <Box display="flex" justifyContent="center">
+          <Box display='flex' justifyContent='center'>
             <CircularProgress />
           </Box>
         ) : (
           data.genres.map(({ name, id }) => (
-            <Link key={name} className={classes.links} to="/">
+            <Link key={name} className={classes.links} to='/'>
               <ListItem
                 onClick={() => dispatch(selectGenreOrCategory(id))}
                 button
